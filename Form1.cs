@@ -51,7 +51,6 @@ namespace EntityFrameworkProjectExample
 				MessageBox.Show("Hata Oluştu! Tüm Alanları Doldurmayı Unutmayınız!" + hata.Message);
 			}
 		}
-
 		private void dgvUrunListesi_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
 			txtUrunAdi.Text = dgvUrunListesi.CurrentRow.Cells[1].Value.ToString();

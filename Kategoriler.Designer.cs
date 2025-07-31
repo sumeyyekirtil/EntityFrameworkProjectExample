@@ -48,7 +48,7 @@
 			this.dgvKategoriler.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dgvKategoriler.BackgroundColor = System.Drawing.Color.Tan;
 			this.dgvKategoriler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgvKategoriler.Location = new System.Drawing.Point(12, 21);
+			this.dgvKategoriler.Location = new System.Drawing.Point(28, 21);
 			this.dgvKategoriler.Name = "dgvKategoriler";
 			this.dgvKategoriler.RowHeadersWidth = 51;
 			this.dgvKategoriler.RowTemplate.Height = 24;

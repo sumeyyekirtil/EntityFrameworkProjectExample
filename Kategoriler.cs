@@ -59,7 +59,6 @@ namespace EntityFrameworkProjectExample
 			btnGuncelle.Enabled = true;
 			btnSil.Enabled = true;
 		}
-
 		private void btnGuncelle_Click(object sender, EventArgs e)
 		{
 			try
@@ -103,9 +102,9 @@ namespace EntityFrameworkProjectExample
 						MessageBox.Show("Kayıt Silindi!");
 					}
 				}
-				catch (Exception)
+				catch (Exception hata)
 				{
-					MessageBox.Show("Hata Oluştu!");
+					MessageBox.Show("Hata Oluştu!" + hata.Message);
 				}
 			}
 		}

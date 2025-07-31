@@ -23,7 +23,6 @@ namespace EntityFrameworkProjectExample
 			_connection.Close();
 			return sonuc;
 		}
-
 		public int Update(Category category)
 		{
 			int sonuc = 0;
