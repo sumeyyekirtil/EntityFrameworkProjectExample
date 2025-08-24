@@ -10,8 +10,9 @@ namespace EntityFrameworkProjectExample
 
 		}
 
-		public virtual DbSet<Category> Categoriler { get; set; }
+		public virtual DbSet<Category> Kategoriler { get; set; } //Category sınıfı tanımlamak için 1.yol -> bu sayfada tanımlama, 2.yol -> başka projedeki category class ı referance almak
+	   
+		//Referans almak : project - referance - add referance - istenilen projeyi ekleme yapılır
 		public virtual DbSet<Product> Urunler { get; set; }
-
 	}
 }

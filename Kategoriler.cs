@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EntityFrameworkProjectExample
-{
+{ //Db connection string doğru değil ve vt nesneleri sql de geçerli değilse burada yazılan kod ile hata alınır.
 	public partial class Kategoriler : Form
 	{
 		public Kategoriler()
@@ -17,95 +17,122 @@ namespace EntityFrameworkProjectExample
 			InitializeComponent();
 		}
 
-		CategoryDal kategoriDAL = new CategoryDal();
+		UrunDbModel context = new UrunDbModel();
 
 		private void Kategoriler_Load(object sender, EventArgs e)
 		{
-			dgvKategoriler.DataSource = kategoriDAL.GetDataTable("select * from Category");
+			Yukle();
+		}
+		void Yukle()
+		{ //uzun uzun yazmak yerine Yukle metodunu çağırmak yeterli olur
+			dgvKategoriler.DataSource = context.Kategoriler.ToList();
+			//her işlem sonrası yazmaya gerek kalmıyor!!!
+			//btnEkle.Enabled = true;
+			//btnGuncelle.Enabled = false;
+			//btnSil.Enabled = false;
+
+			//işlemden sonra textbox sil
+			txtKategoriAdi.Text = string.Empty;
+			txtKategoriAciklamasi.Text = "";
+			cbActive.Checked = false;
+
 		}
 
 		private void btnEkle_Click(object sender, EventArgs e)
 		{
-
 			try
 			{
-				var kategori = new Category()
+				var Category = new Category()
 				{
 					Name = txtKategoriAdi.Text,
 					Description = txtKategoriAciklamasi.Text,
 					CreateDate = DateTime.Now,
 					Active = cbActive.Checked
 				};
-				var sonuc = kategoriDAL.Add(kategori);
+				context.Kategoriler.Add(Category); //boş kategori ekledik
+
+				int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
 				if (sonuc > 0)
 				{
-					dgvKategoriler.DataSource = kategoriDAL.GetDataTable("select * from Category");
+					//dgvKategoriler.DataSource = context.Categories.ToList(); //yerine ->
+					Yukle();
+
+					//ekledikten sonra textbox ları boşalt -> Yukle() içinde
+					txtKategoriAdi.Clear();
+					txtKategoriAciklamasi.Clear();
+					cbActive.Checked = false;
+
 					MessageBox.Show("Kayıt Başarılı!");
 				}
 			}
-			catch (Exception hata)
+			catch (Exception)
 			{
-				MessageBox.Show("Hata Oluştu!" + hata.Message);
+				MessageBox.Show("Hata Oluştu!");
 			}
 		}
 
 		private void dgvKategoriler_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			txtKategoriAdi.Text = dgvKategoriler.CurrentRow.Cells[1].Value.ToString();
-			txtKategoriAciklamasi.Text = dgvKategoriler.CurrentRow.Cells[2].Value.ToString();
-			cbActive.Checked = Convert.ToBoolean(dgvKategoriler.CurrentRow.Cells[3].Value);
+			//güvenli yöntemi : db id yi çekip vt eşleşen kayıtı bulup göstermek = böylece veritabanından veriler gelir
+			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
+			var kayit = context.Kategoriler.Find(id); //id yi ef nin find metoduna verip eşleşen kategoriyi getirdik.
 
-			btnEkle.Enabled = false;
-			btnGuncelle.Enabled = true;
-			btnSil.Enabled = true;
+			#region  Db den gelen kaydı ekrana doldur
+			txtKategoriAdi.Text = kayit.Name;
+			txtKategoriAciklamasi.Text = kayit.Description;
+			cbActive.Checked = kayit.Active;
+			#endregion
 		}
 		private void btnGuncelle_Click(object sender, EventArgs e)
 		{
-			try
+			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
+			var kayit = context.Kategoriler.Find(id); //vt bulunan kayıt ile kaydı değiştir
+
+			kayit.Name = txtKategoriAdi.Text;
+			kayit.Description = txtKategoriAciklamasi.Text;
+			kayit.Active = cbActive.Checked;
+
+			int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
+			if (sonuc > 0)
 			{
-				var kategori = new Category()
-				{
-					Id = (int)dgvKategoriler.CurrentRow.Cells[0].Value,
-					Name = txtKategoriAdi.Text,
-					Description = txtKategoriAciklamasi.Text,
-					Active = cbActive.Checked
-				};
-				var sonuc = kategoriDAL.Update(kategori);
-				if (sonuc > 0)
-				{
-					dgvKategoriler.DataSource = kategoriDAL.GetDataTable("select * from Category");
-					btnEkle.Enabled = true;
-					btnGuncelle.Enabled = false;
-					btnSil.Enabled = false;
-					MessageBox.Show("Kayıt Başarılı!");
-				}
+				//dgvKategoriler.DataSource = context.Categories.ToList();
+				Yukle();
+
+				//güncelledikten sonra textbox boşalt
+				txtKategoriAdi.Clear();
+				txtKategoriAciklamasi.Clear();
+				cbActive.Checked = false;
+
+				MessageBox.Show("Güncelleme Başarılı!");
 			}
-			catch (Exception hata)
+			else
 			{
-				MessageBox.Show("Hata Oluştu!" + hata.Message);
+				MessageBox.Show("Güncelleme Başarısız! Lütfen Tüm Alanları Doldurunuz!");
 			}
 		}
 
 		private void btnSil_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Kaydı Silmek İstiyor Musunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
+			var kayit = context.Kategoriler.Find(id); //vt bulunan kayıt ile
+
+			context.Kategoriler.Remove(kayit); //kaydı sil
+
+			int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
+			if (sonuc > 0)
 			{
-				try
-				{
-					int sonuc = kategoriDAL.Delete((int)dgvKategoriler.CurrentRow.Cells[0].Value);
-					if (sonuc > 0)
-					{
-						dgvKategoriler.DataSource = kategoriDAL.GetDataTable("select * from Category");
-						btnEkle.Enabled = true;
-						btnGuncelle.Enabled = false;
-						btnSil.Enabled = false;
-						MessageBox.Show("Kayıt Silindi!");
-					}
-				}
-				catch (Exception hata)
-				{
-					MessageBox.Show("Hata Oluştu!" + hata.Message);
-				}
+				Yukle();
+
+				//silme işleminden sonra txt boşalt ->
+				txtKategoriAdi.Clear();
+				txtKategoriAciklamasi.Clear();
+				cbActive.Checked = false;
+
+				MessageBox.Show("Kayıt Silme Başarılı!");
+			}
+			else
+			{
+				MessageBox.Show("Kayıt Silme Başarısız! Lütfen Tüm Alanları Doldurunuz!");
 			}
 		}
 	}

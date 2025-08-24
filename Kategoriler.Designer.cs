@@ -87,9 +87,9 @@
 			// 
 			// btnGuncelle
 			// 
-			this.btnGuncelle.Location = new System.Drawing.Point(142, 257);
+			this.btnGuncelle.Location = new System.Drawing.Point(131, 257);
 			this.btnGuncelle.Name = "btnGuncelle";
-			this.btnGuncelle.Size = new System.Drawing.Size(75, 42);
+			this.btnGuncelle.Size = new System.Drawing.Size(97, 42);
 			this.btnGuncelle.TabIndex = 21;
 			this.btnGuncelle.Text = "Güncelle";
 			this.btnGuncelle.UseVisualStyleBackColor = true;
@@ -165,6 +165,7 @@
 			this.Controls.Add(this.gbKategori);
 			this.Controls.Add(this.dgvKategoriler);
 			this.Name = "Kategoriler";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Kategoriler";
 			this.Load += new System.EventHandler(this.Kategoriler_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dgvKategoriler)).EndInit();

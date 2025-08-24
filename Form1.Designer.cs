@@ -43,6 +43,8 @@
 			this.dgvUrunListesi = new System.Windows.Forms.DataGridView();
 			this.txtAra = new System.Windows.Forms.TextBox();
 			this.btnAra = new System.Windows.Forms.Button();
+			this.txtDescription = new System.Windows.Forms.RichTextBox();
+			this.lblDescription = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvUrunListesi)).BeginInit();
 			this.SuspendLayout();
@@ -50,6 +52,8 @@
 			// groupBox1
 			// 
 			this.groupBox1.BackColor = System.Drawing.Color.DarkGray;
+			this.groupBox1.Controls.Add(this.lblDescription);
+			this.groupBox1.Controls.Add(this.txtDescription);
 			this.groupBox1.Controls.Add(this.btnSil);
 			this.groupBox1.Controls.Add(this.btnGuncelle);
 			this.groupBox1.Controls.Add(this.btnEkle);
@@ -63,7 +67,7 @@
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Location = new System.Drawing.Point(465, 40);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(307, 219);
+			this.groupBox1.Size = new System.Drawing.Size(307, 396);
 			this.groupBox1.TabIndex = 5;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Ürün Bilgileri";
@@ -72,7 +76,7 @@
 			// 
 			this.btnSil.BackColor = System.Drawing.Color.Tan;
 			this.btnSil.Enabled = false;
-			this.btnSil.Location = new System.Drawing.Point(222, 175);
+			this.btnSil.Location = new System.Drawing.Point(222, 342);
 			this.btnSil.Name = "btnSil";
 			this.btnSil.Size = new System.Drawing.Size(63, 37);
 			this.btnSil.TabIndex = 10;
@@ -83,7 +87,7 @@
 			// btnGuncelle
 			// 
 			this.btnGuncelle.Enabled = false;
-			this.btnGuncelle.Location = new System.Drawing.Point(121, 175);
+			this.btnGuncelle.Location = new System.Drawing.Point(121, 342);
 			this.btnGuncelle.Name = "btnGuncelle";
 			this.btnGuncelle.Size = new System.Drawing.Size(95, 37);
 			this.btnGuncelle.TabIndex = 10;
@@ -93,7 +97,7 @@
 			// 
 			// btnEkle
 			// 
-			this.btnEkle.Location = new System.Drawing.Point(24, 175);
+			this.btnEkle.Location = new System.Drawing.Point(24, 342);
 			this.btnEkle.Name = "btnEkle";
 			this.btnEkle.Size = new System.Drawing.Size(91, 37);
 			this.btnEkle.TabIndex = 9;
@@ -170,6 +174,7 @@
 			// 
 			// dgvUrunListesi
 			// 
+			this.dgvUrunListesi.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dgvUrunListesi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dgvUrunListesi.Location = new System.Drawing.Point(23, 40);
 			this.dgvUrunListesi.Name = "dgvUrunListesi";
@@ -196,6 +201,23 @@
 			this.btnAra.UseVisualStyleBackColor = true;
 			this.btnAra.Click += new System.EventHandler(this.btnAra_Click);
 			// 
+			// txtDescription
+			// 
+			this.txtDescription.Location = new System.Drawing.Point(24, 197);
+			this.txtDescription.Name = "txtDescription";
+			this.txtDescription.Size = new System.Drawing.Size(261, 126);
+			this.txtDescription.TabIndex = 12;
+			this.txtDescription.Text = "";
+			// 
+			// lblDescription
+			// 
+			this.lblDescription.AutoSize = true;
+			this.lblDescription.Location = new System.Drawing.Point(21, 178);
+			this.lblDescription.Name = "lblDescription";
+			this.lblDescription.Size = new System.Drawing.Size(63, 16);
+			this.lblDescription.TabIndex = 13;
+			this.lblDescription.Text = "Açıklama";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -206,6 +228,7 @@
 			this.Controls.Add(this.dgvUrunListesi);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "Form1";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Entity Framework Ürün Yönetimi";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.groupBox1.ResumeLayout(false);
@@ -233,6 +256,8 @@
 		private System.Windows.Forms.DataGridView dgvUrunListesi;
 		private System.Windows.Forms.TextBox txtAra;
 		private System.Windows.Forms.Button btnAra;
+		private System.Windows.Forms.Label lblDescription;
+		private System.Windows.Forms.RichTextBox txtDescription;
 	}
 }
 
