@@ -31,11 +31,11 @@ namespace EntityFrameworkProjectExample
 			InitializeComponent();
 		}
 
-		UrunDbModel context = new UrunDbModel(); //dal gibi oluşturduk nesneyi
+		UrunDbModel _context = new UrunDbModel(); //dal gibi oluşturduk nesneyi
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			dgvUrunListesi.DataSource = context.Urunler.ToList(); //entity framework ile vt daki ürünleri çekme
+			dgvUrunListesi.DataSource = _context.Urunler.ToList(); //entity framework ile vt daki ürünleri çekme
 		}
 
 		private void btnEkle_Click(object sender, EventArgs e)
@@ -52,12 +52,12 @@ namespace EntityFrameworkProjectExample
 					Durum = cbDurum.Checked
 				};
 
-				context.Urunler.Add(urun); //context nesnesindeki products tablosuna ürün ekle
-				int sonuc = context.SaveChanges(); //context deki değişiklikleri db yansıt 
+				_context.Urunler.Add(urun); //context nesnesindeki products tablosuna ürün ekle
+				int sonuc = _context.SaveChanges(); //context deki değişiklikleri db yansıt 
 												   //savechanges : eğer sonuç 0 dan büyük değilse yapılan değişiklikleri geri al vt işlemi sil görevi görür
 				if (sonuc > 0)
 				{
-					dgvUrunListesi.DataSource = context.Urunler.ToList(); //ekrandaki dgv tekrar yüklüyoruz yoksa ekranda gözükmez!
+					dgvUrunListesi.DataSource = _context.Urunler.ToList(); //ekrandaki dgv tekrar yüklüyoruz yoksa ekranda gözükmez!
 
 					txtUrunAdi.Clear();
 					txtUrunFiyati.Clear();
@@ -96,7 +96,7 @@ namespace EntityFrameworkProjectExample
 			try
 			{
 				int id = (int)dgvUrunListesi.CurrentRow.Cells[0].Value; //seçilen ürün id al
-				var urun = context.Urunler.Find(id); //db eşleşen id bulunan ürünün özelliklerini değiştir
+				var urun = _context.Urunler.Find(id); //db eşleşen id bulunan ürünün özelliklerini değiştir
 
 				urun.Durum = cbDurum.Checked;
 				urun.Description = Convert.ToString(txtDescription.Text);
@@ -104,10 +104,10 @@ namespace EntityFrameworkProjectExample
 				urun.Price = Convert.ToDecimal(txtUrunFiyati.Text);
 				urun.Name = txtUrunAdi.Text;
 
-				int sonuc = context.SaveChanges(); //context deki değişiklikleri vt yansıt
+				int sonuc = _context.SaveChanges(); //context deki değişiklikleri vt yansıt
 				if (sonuc > 0)
 				{
-					dgvUrunListesi.DataSource = context.Urunler.ToList(); //ekrandaki dgv tekrar yüklüyoruz yoksa ekranda gözükmez!
+					dgvUrunListesi.DataSource = _context.Urunler.ToList(); //ekrandaki dgv tekrar yüklüyoruz yoksa ekranda gözükmez!
 
 					txtUrunAdi.Clear();
 					txtUrunFiyati.Clear();
@@ -135,13 +135,13 @@ namespace EntityFrameworkProjectExample
 			{
 				try
 				{
-					var product = context.Urunler.Find((int)dgvUrunListesi.CurrentRow.Cells[0].Value); //kayıtı bul
-					context.Urunler.Remove(product); //kayıtı sil
+					var product = _context.Urunler.Find((int)dgvUrunListesi.CurrentRow.Cells[0].Value); //kayıtı bul
+					_context.Urunler.Remove(product); //kayıtı sil
 
-					int sonuc = context.SaveChanges(); //id ulaşılan yere getirdik
+					int sonuc = _context.SaveChanges(); //id ulaşılan yere getirdik
 					if (sonuc > 0)
 					{
-						dgvUrunListesi.DataSource = context.Urunler.ToList();
+						dgvUrunListesi.DataSource = _context.Urunler.ToList();
 						btnEkle.Enabled = true;
 						btnGuncelle.Enabled = false;
 						btnSil.Enabled = false;
@@ -165,7 +165,7 @@ namespace EntityFrameworkProjectExample
 
 		private void btnAra_Click(object sender, EventArgs e)
 		{
-			dgvUrunListesi.DataSource = context.Urunler.Where(p => p.Name.Contains(txtAra.Text)).ToList(); //p - product tablosunu simgeliyor (lambda expression)
+			dgvUrunListesi.DataSource = _context.Urunler.Where(p => p.Name.Contains(txtAra.Text)).ToList(); //p - product tablosunu simgeliyor (lambda expression)
 			//ürün adı içeriyorsa (contains) txtara.text e gönder
 		}
 	}

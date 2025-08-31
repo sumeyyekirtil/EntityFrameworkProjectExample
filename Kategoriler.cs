@@ -17,7 +17,7 @@ namespace EntityFrameworkProjectExample
 			InitializeComponent();
 		}
 
-		UrunDbModel context = new UrunDbModel();
+		UrunDbModel _context = new UrunDbModel();
 
 		private void Kategoriler_Load(object sender, EventArgs e)
 		{
@@ -25,7 +25,7 @@ namespace EntityFrameworkProjectExample
 		}
 		void Yukle()
 		{ //uzun uzun yazmak yerine Yukle metodunu çağırmak yeterli olur
-			dgvKategoriler.DataSource = context.Kategoriler.ToList();
+			dgvKategoriler.DataSource = _context.Kategoriler.ToList();
 			//her işlem sonrası yazmaya gerek kalmıyor!!!
 			//btnEkle.Enabled = true;
 			//btnGuncelle.Enabled = false;
@@ -49,9 +49,9 @@ namespace EntityFrameworkProjectExample
 					CreateDate = DateTime.Now,
 					Active = cbActive.Checked
 				};
-				context.Kategoriler.Add(Category); //boş kategori ekledik
+				_context.Kategoriler.Add(Category); //boş kategori ekledik
 
-				int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
+				int sonuc = _context.SaveChanges(); //context deki değişiklikleri kayıt ettik
 				if (sonuc > 0)
 				{
 					//dgvKategoriler.DataSource = context.Categories.ToList(); //yerine ->
@@ -75,7 +75,7 @@ namespace EntityFrameworkProjectExample
 		{
 			//güvenli yöntemi : db id yi çekip vt eşleşen kayıtı bulup göstermek = böylece veritabanından veriler gelir
 			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
-			var kayit = context.Kategoriler.Find(id); //id yi ef nin find metoduna verip eşleşen kategoriyi getirdik.
+			var kayit = _context.Kategoriler.Find(id); //id yi ef nin find metoduna verip eşleşen kategoriyi getirdik.
 
 			#region  Db den gelen kaydı ekrana doldur
 			txtKategoriAdi.Text = kayit.Name;
@@ -86,13 +86,13 @@ namespace EntityFrameworkProjectExample
 		private void btnGuncelle_Click(object sender, EventArgs e)
 		{
 			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
-			var kayit = context.Kategoriler.Find(id); //vt bulunan kayıt ile kaydı değiştir
+			var kayit = _context.Kategoriler.Find(id); //vt bulunan kayıt ile kaydı değiştir
 
 			kayit.Name = txtKategoriAdi.Text;
 			kayit.Description = txtKategoriAciklamasi.Text;
 			kayit.Active = cbActive.Checked;
 
-			int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
+			int sonuc = _context.SaveChanges(); //context deki değişiklikleri kayıt ettik
 			if (sonuc > 0)
 			{
 				//dgvKategoriler.DataSource = context.Categories.ToList();
@@ -114,11 +114,11 @@ namespace EntityFrameworkProjectExample
 		private void btnSil_Click(object sender, EventArgs e)
 		{
 			int id = (int)dgvKategoriler.CurrentRow.Cells[0].Value; //seçili satırdaki kaydın id sini yakaladık
-			var kayit = context.Kategoriler.Find(id); //vt bulunan kayıt ile
+			var kayit = _context.Kategoriler.Find(id); //vt bulunan kayıt ile
 
-			context.Kategoriler.Remove(kayit); //kaydı sil
+			_context.Kategoriler.Remove(kayit); //kaydı sil
 
-			int sonuc = context.SaveChanges(); //context deki değişiklikleri kayıt ettik
+			int sonuc = _context.SaveChanges(); //context deki değişiklikleri kayıt ettik
 			if (sonuc > 0)
 			{
 				Yukle();
