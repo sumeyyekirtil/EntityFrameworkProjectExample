@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //ENTITY FRAMEWORK : Ado Net işlemlerini daha kolay ve hızlı yapabilen kütüphanedir
+/*
+ * Entity Framework ile sql e tabloyu aktarmak için tek yapılması gereken ->
+ * 1 - gerekli class eklemek datagridview ile veri çekmek
+ * 2 - app config dosyasına connectionstrings sorgusunu yazıp
+ * 3 - execute ile sql server da db hazır hale gelir
+ */
 //Sql işlemlerini çok kolaylaştırır.
 //Crud işlemleri ve büyük uygulama arkaplan kodlama işleminde Ado Net + Stored Procedure kullanılır.
 //Genelde Entity Framework kullanılır küçük uygulamalarda (hızlı işlemlerde)

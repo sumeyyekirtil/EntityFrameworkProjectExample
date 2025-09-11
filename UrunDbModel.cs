@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity; //entity framework kütüphanesi
-using EntityFrameworkProjectExample;
 
 namespace EntityFrameworkProjectExample
 {
